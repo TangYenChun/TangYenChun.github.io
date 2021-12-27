@@ -292,6 +292,7 @@ section{
 .content p{
     padding-left: 1em;
     text-indent: -1em;
+    line-height: 1.3em;
 }
 
 
