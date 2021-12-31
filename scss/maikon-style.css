@@ -5,7 +5,7 @@ body {
 }
 
 .nav {
-  height: 60px;
+  height: 40px;
   max-width: 1200px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -19,6 +19,10 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding: 10px 30px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
 }
 
 .nav .nav_logo {
