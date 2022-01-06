@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon_hw</title>
+</head>
+
+<body>
+    <h1>寶可夢圖鑑列表</h1>
+    <button id="btn1">載入寶可夢圖鑑列表btn.onclick</button>
+    <button id="btn2">載入寶可夢圖鑑列表addEventListener()</button>
+    <button id="btnPlus">Click + 1</button>
+    <button id="btnDecrease">Click - 1</button>
+    <button onclick='fetchPokemon_appendChild()'>load all</button>
+    <button id='reset' onclick="resetPokemon()">Reset</button>
+
+    <div id='container'></div>
+
+    <script>
+        window.onload = function(){
+            let container = document.getElementById('container');
+            let index;
+            let btn1 = document.getElementById("btn1");
+            let btn2 = document.getElementById("btn2");
+            let btnPlus = document.getElementById("btnPlus");
+            let btnDecrease = document.getElementById("btnDecrease");
+            
+            setPokemon();
+        }
+
+        //初始設定
+        function setPokemon() {
+            let h1 = document.getElementsByTagName('h1')[0];
+            h1.innerText = "Pokemon圖鑑列表";
+
+            let fileName = "001";
+            let pathFile = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`;
+            let pokemonImg = `<img src='${pathFile}'>`;
+
+            container.innerHTML = pokemonImg;
+
+            index = getIndex();
+        }
+
+        //index初始值設定
+        function getIndex(){
+            if (container.firstChild){ return 2; }
+            else{ return 1; }
+        }
+
+        //btn.onclick
+        btn1.onclick = function(){
+            let pokemons = "";
+
+            for (let i = 1; i < 890; i++){
+                let fileName = i.toString().padStart(3,0);
+                let pathFile = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`;
+                let pokemonImg = `<img src='${pathFile}'>`;
+                pokemons += pokemonImg;
+            }
+            container.innerHTML = pokemons;
+        }
+
+        //addEventListener
+        btn2.addEventListener('click', function(){
+            container.innerHTML = "";
+
+            for (let i = 1; i < 890; i++){
+                let fileName = i.toString().padStart(3,0);
+                let img = document.createElement("img");
+                img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
+                container.appendChild(img);
+            }
+        })
+        
+        //Click + 1
+        btnPlus.addEventListener('click', function(){
+            let fileName = index.toString().padStart(3,0);
+            let img = document.createElement("img");
+            img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
+            container.appendChild(img);
+
+            index++;
+        })
+
+        //Click - 1
+        btnDecrease.addEventListener('click', function(){
+            if (container.lastChild){
+                container.removeChild(container.lastChild);
+            }
+        })
+
+        //load all
+        function fetchPokemon_appendChild() {
+            container.innerHTML = ""; 
+
+            let fileName;
+            for (let i = 1; i<890; i++){
+                fileName = i.toString().padStart(3,0);
+                let img = document.createElement("img");
+                img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
+                container.appendChild(img);
+            }
+        }
+
+        //reset
+        function resetPokemon() {
+            container.innerHTML = "";
+            index = getIndex();
+        }
+    </script>
+</body>
+
+</html>
