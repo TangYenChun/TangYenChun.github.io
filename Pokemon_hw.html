@@ -92,6 +92,7 @@
                 pokemons += pokemonImg;
             }
             container.innerHTML = pokemons;
+            index = 890;
         }
 
         //addEventListener
@@ -104,25 +105,32 @@
                 img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
                 container.appendChild(img);
             }
+            index = 890;
         })
         
         //Click + 1
         btnPlus.addEventListener('click', function(){
-            let fileName = index.toString().padStart(3,0);
-            let img = document.createElement("img");
-            img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
-            container.appendChild(img);
+            if (index < 890){
+                let fileName = index.toString().padStart(3,0);
+                let img = document.createElement("img");
+                img.setAttribute("src", `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${fileName}.png`);
+                container.appendChild(img);
 
-            index++;
+                index++;
+            }
+            
         })
 
         //Click - 1
         btnDecrease.addEventListener('click', function(){
-            if (container.lastChild){
+            if (index > 0){
+                if (container.lastChild){
                 container.removeChild(container.lastChild);
 
                 index--;
+                }
             }
+            
         })
 
         //reset
