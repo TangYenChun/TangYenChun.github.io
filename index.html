@@ -4,11 +4,95 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TangYenChun</title>
-    <link rel="stylesheet" href="css/index-style.css">
+    <title>TYC | TangYenChun's Portfolio</title>
+    <link rel="stylesheet" href="scss/index-style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <h1>TangYenChun's Portfolio</h1>
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container">
+            <h1><a class="navbar-brand" href="#">TYC</a></h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
+                            <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                                <li><a class="dropdown-item" href="#">HTML/CSS</a></li>
+                                <li><a class="dropdown-item" href="#">JavaScript</a></li>
+                                <li><a class="dropdown-item" href="#">C#</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="main container">
+        <section class="about row">
+            <div class="pic col-10 col-md-5 mx-auto">
+                <img class="w-100" src="img/img_index/avatar.png" alt="">
+            </div>
+            <div class="txt col-10 col-md-5 mx-auto">
+                <h2>湯晏淳</h2>
+                <h3>Tang Yen Chun</h3>
+                <p>臺北科技大學 互動設計系
+                </p>
+            </div>
+        </section>
+        <section class="projects row mx-auto">
+            <a class="projects__item col-10 col-md-3">
+                <div class="projects__item__pic">
+                    <i class="fab fa-html5"></i>
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <h3>HTML/CSS</h3>
+            </a>
+            <a class="projects__item col-10 col-md-3">
+                <div class="projects__item__pic">
+                    <i class="fab fa-js-square"></i>
+                </div>
+                <h3>JavaScript</h3>
+            </a>
+            <a class="projects__item col-10 col-md-3">
+                <div class="projects__item__pic">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>C#</h3>
+            </a>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="footer__icon-group">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-behance"></i></a>
+            </div>
+        </div>
+    </footer>
+
+
+
+
     <ul>
         <li><a href="HW_table.html">001.課表</a></li>
         <li><a href="build-school.html">002.Build School官網</a></li>
@@ -16,6 +100,12 @@
         <li><a href="maikon-hw.html">004.Maikon</a></li>
         <li><a href="maikon-bootstrap-hw.html">005.Maikon-Bootstrap</a></li>
         <li><a href="Pokemon_hw.html">006.Pokemon</a></li>
+        <li><a href="MarketingShare.html">007.MarketingShare</a></li>
     </ul>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
