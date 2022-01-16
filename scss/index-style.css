@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&family=Raleway:wght@900&family=Roboto:wght@300;400;700;900&display=swap");
+body {
+  background-color: #333;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+nav {
+  background-color: #333;
+}
+
+nav .navbar-brand {
+  color: #ccc;
+  font-family: 'Raleway', sans-serif;
+}
+
+.main {
+  margin-top: 100px;
+}
+
+.projects__item {
+  background-color: #ccc;
+}
+
+.projects__item i {
+  width: 100%;
+  color: #000;
+}
+/*# sourceMappingURL=index-style.css.map */

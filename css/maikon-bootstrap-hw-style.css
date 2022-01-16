@@ -50,6 +50,10 @@ main{
     border-radius: 5px;
 }
 
+.main_btn a:hover{
+    color: #000;
+}
+
 .side_btn a{
     color: var(--minor-color);
     background-color: #fff;
@@ -62,12 +66,12 @@ main{
     width: 50%;
 }
 
-.card .icon{
-    width: 25%;
+.card{
+    box-shadow: 3px 3px 10px 10px #ccc;
 }
 
-.card .btn{
-    text-align: left;
+.card .icon{
+    width: 25%;
 }
 
 .card-body a{
