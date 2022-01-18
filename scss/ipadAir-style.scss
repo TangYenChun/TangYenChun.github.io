@@ -47,23 +47,27 @@ h3{
     }
 }
 .main{
+    max-width: 1200px;
     .aside_img{
+        width: 40%;
+        // margin-left: auto;
         padding-top: 40px;
         position: sticky;
         top: 52px;
         img{
-            width: 90%;
+            width: 100%;
         }
     } 
     .main_side{
         padding-top: 40px;
         width: 40%;
+        // margin-right: auto;
         .outward{
             .outward__button{
                 font-size: 12px;
                 border-radius: 10px;
                 border: 1px solid #ccc;
-                width: 40%;
+                width: 48%;
                 &:hover{
                     border-color: #272729;
                 }
@@ -88,6 +92,7 @@ h3{
     }
     .btn_group{
         button{
+            height: 106px;
             border-radius: 10px;
             border: 1px solid #ccc;
             &:hover{
