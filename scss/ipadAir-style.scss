@@ -15,6 +15,7 @@ h3{
     padding-top: 40px;
 }
 .nav{
+    overflow: hidden;
     font-size: 12px;
     font-weight: 300;
     background-color: #272729;
@@ -28,6 +29,16 @@ h3{
                 color: #ddd;
             }
         }
+    }
+    &::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        filter: blur(5px);
+        z-index: -1;
     }
 }
 .header{
@@ -46,6 +57,7 @@ h3{
         font-size: 12px;
     }
 }
+
 .main{
     max-width: 1200px;
     .aside_img{
@@ -62,56 +74,63 @@ h3{
         padding-top: 40px;
         width: 40%;
         // margin-right: auto;
-        .outward{
-            .outward__button{
-                font-size: 12px;
-                border-radius: 10px;
-                border: 1px solid #ccc;
-                width: 48%;
-                &:hover{
-                    border-color: #272729;
+        .outward__button{
+            font-size: 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 48%;
+            &:hover{
+                border-color: #272729;
+            }
+            &:focus{
+                border-color: cornflowerblue;
+                outline: 3px solid cornflowerblue;
+            }
+            .btn_container{
+                padding: 20px 14px;
+                p{
+                    margin-bottom: 0;
                 }
-                .btn_container{
-                    padding: 20px 14px;
-                    p{
-                        margin-bottom: 0;
-                    }
-                }
-                img{
-                    width: 32px;
-                }
+            }
+            img{
+                width: 32px;
             }
         }
     }
 }
+
 .section{
     .remind{
         border: none;
         border-radius: 10px;
         font-size: 10px;
     }
-    .btn_group{
-        button{
-            height: 106px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            &:hover{
-                border-color: #272729;
-            }
-            .btn_container{
-                padding: 15px;
-                .txt_main{
-                    font-size: 30px;
-                }
-            }
+    .button{
+        height: 106px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        // &:hover{
+        //     border-color: #272729;
+        // }
+        &:focus{
+            border-color: cornflowerblue;
+            outline: 2px solid cornflowerblue;
         }
-        .btn_price{
-            font-size: 12px;
-            font-weight: 300;
-            color: #272729;
+        .btn_container{
+            padding: 15px;
+            .txt_main{
+                font-size: 30px;
+            }
         }
     }
+    .btn_price{
+        font-size: 12px;
+        font-weight: 300;
+        color: #272729;
+    }
 }
+
+
 .wifi{
     .txt_main_wifi{
         font-size: 17px;
@@ -121,6 +140,7 @@ h3{
     background-color: #eee;
     .totalPrice{
         font-size: 30px;
+        font-weight: 700;
         color: #272729;
     }
     p:nth-child(2){
@@ -128,3 +148,29 @@ h3{
         color: #272729;
     }
 }
+.disabled{
+    opacity: .4;
+    cursor: default;
+}
+
+// .button:hover{
+//     border-color: #272729;
+// }
+// .button:focus{
+//     border-color: cornflowerblue;
+//     outline: 2px solid cornflowerblue;
+// }
+
+// .btn64gb:hover{
+//     border-color: #272729;
+// }
+// .btn64gb:focus{
+//     border-color: cornflowerblue;
+//     outline: 2px solid cornflowerblue;
+// }
+
+// .button:focus {
+//     border-color: cornflowerblue;
+//     outline: 2px solid cornflowerblue;
+// }
+

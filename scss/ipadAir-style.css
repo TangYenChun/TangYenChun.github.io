@@ -18,6 +18,7 @@ h3 {
 }
 
 .nav {
+  overflow: hidden;
   font-size: 12px;
   font-weight: 300;
   background-color: #272729;
@@ -35,6 +36,18 @@ h3 {
 .nav ul .nav__item a {
   text-decoration: none;
   color: #ddd;
+}
+
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+  z-index: -1;
 }
 
 .header {
@@ -78,26 +91,31 @@ h3 {
   width: 40%;
 }
 
-.main .main_side .outward .outward__button {
+.main .main_side .outward__button {
   font-size: 12px;
   border-radius: 10px;
   border: 1px solid #ccc;
   width: 48%;
 }
 
-.main .main_side .outward .outward__button:hover {
+.main .main_side .outward__button:hover {
   border-color: #272729;
 }
 
-.main .main_side .outward .outward__button .btn_container {
+.main .main_side .outward__button:focus {
+  border-color: cornflowerblue;
+  outline: 3px solid cornflowerblue;
+}
+
+.main .main_side .outward__button .btn_container {
   padding: 20px 14px;
 }
 
-.main .main_side .outward .outward__button .btn_container p {
+.main .main_side .outward__button .btn_container p {
   margin-bottom: 0;
 }
 
-.main .main_side .outward .outward__button img {
+.main .main_side .outward__button img {
   width: 32px;
 }
 
@@ -107,25 +125,26 @@ h3 {
   font-size: 10px;
 }
 
-.section .btn_group button {
+.section .button {
   height: 106px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
 
-.section .btn_group button:hover {
-  border-color: #272729;
+.section .button:focus {
+  border-color: cornflowerblue;
+  outline: 2px solid cornflowerblue;
 }
 
-.section .btn_group button .btn_container {
+.section .button .btn_container {
   padding: 15px;
 }
 
-.section .btn_group button .btn_container .txt_main {
+.section .button .btn_container .txt_main {
   font-size: 30px;
 }
 
-.section .btn_group .btn_price {
+.section .btn_price {
   font-size: 12px;
   font-weight: 300;
   color: #272729;
@@ -141,11 +160,17 @@ h3 {
 
 .price .totalPrice {
   font-size: 30px;
+  font-weight: 700;
   color: #272729;
 }
 
 .price p:nth-child(2) {
   font-size: 12px;
   color: #272729;
+}
+
+.disabled {
+  opacity: .4;
+  cursor: default;
 }
 /*# sourceMappingURL=ipadAir-style.css.map */
