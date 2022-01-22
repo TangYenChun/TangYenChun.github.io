@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <button id="btn1">存檔</button>
+    <button id="btn2">讀取</button>
+    <p>(讀取文字)</p>
+    <p id="p">(Jimmy)</p>
+
+    <script>
+        // window.localStorage
+        //只能存字串，要存json必須要先轉為字串，要用時再轉為物件
+        document.querySelector("#btn1").onclick = function(){
+            let val = document.querySelector("input").value;
+            // localStorage.setItem("id", value);
+            localStorage.setItem("a1", val);
+
+            let obj = {
+                name = 'Jimmy',
+                age = 25
+            }
+            localStorage.setItem("Jimmy", JSON.stringify(obj))
+        }
+        document.querySelector("#btn2").onclick = function(){
+            // localStorage.getItem("id") -> 回傳value
+            let val = localStorage.getItem("a1");
+            document.querySelector("p").innerText = val;
+
+            let Jimmy = JSON.parse(localStorage.getItem("Jimmy"))
+            document.querySelector("#p").innerText = `姓名: ${Jimmy.name} | 年齡: ${Jimmy.age}`;
+        }
+        
+    </script>
+</body>
+</html>

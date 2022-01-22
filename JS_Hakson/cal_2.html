@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <br>
+    <div>
+        <button class="num">1</button>
+        <button class="num">2</button>
+        <button class="num">3</button>
+        <button class="sign">+</button>
+        <br>
+        <button class="num">4</button>
+        <button class="num">5</button>
+        <button class="num">6</button>
+        <button class="sign">-</button>
+        <br>
+        <button class="num">7</button>
+        <button class="num">8</button>
+        <button class="num">9</button>
+        <button class="sign">*</button>
+        <br>
+        <button class="reset">C</button>
+        <button class="num">0</button>
+        <button class="num">.</button>
+        <button class="sign">/</button>
+        <br>
+        <button class="equal">=</button>
+    </div>
+
+
+    <script>
+        let currentSign = '';
+        let numFirst = 0;
+        let numSecond = 0;
+        const caculateMethods = [
+            { sign: '+', func: (a, b) => a + b },
+            { sign: '-', func: (a, b) => a - b },
+            { sign: '*', func: (a, b) => a * b },
+            { sign: '/', func: (a, b) => a / b },
+        ];
+
+        //DOM
+        const numberInput = document.querySelector('input');
+        const resetBtn = document.querySelector('.reset');
+        const equalBtn = document.querySelector('.equal');
+
+        const numBtns = document.querySelectorAll('.num');
+        const signBtns = document.querySelectorAll('.sign');
+
+        window.onload = () => {
+            //數字按鈕
+            numBtns.forEach(btn => {
+                btn.onclick = function(){
+                    numberInput.value += btn.innerText;
+                }
+            })
+
+            //清除按鈕
+            resetBtn.onclick = function(){
+                numberInput.value = "";
+            }
+
+            //符號按鈕
+            signBtns.forEach(btn => {
+                btn.onclick = () => {
+                    currentSign = btn.innerText;
+                    numFirst = parseFloat(numberInput.value);
+                    numberInput.value = '';
+                }
+            })
+
+            //等於
+            equalBtn.onclick = () => {
+                numSecond = parseFloat(numberInput.value);
+                let caculate = caculateMethods.find(x => x.sign == currentSign);
+                let answer = caculate.func(numFirst, numSecond);
+                
+                numberInput.value = answer;
+            }
+            // eval(10 - 8) -> 2
+
+        }
+    </script>
+</body>
+</html>

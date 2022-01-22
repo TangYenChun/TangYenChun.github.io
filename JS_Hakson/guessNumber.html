@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Guess Number</title>
+    <style>
+        #stepGroup{
+            width: 100%;
+            height: 400px;
+            background-color: #ccc;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+        }
+        .step{
+            border: 1px solid #ccc;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div id="stepGroup" class="my-3"></div>
+        
+        <div class="btn-toolbar row d-flex justify-content-between" role="toolbar">
+            <form class="col-6">
+                <label class="input-group " role="group" for="textInput">
+                    <input type="text" class="form-control" id="textInput" placeholder="輸入數字" disabled="true">
+                    <button type="reset" class="btn btn-primary btnGuess" disabled="true">猜答案</button>
+                </label>
+            </form>
+            <div class="btn-group col-5" role="group">
+                <button type="button" class="btn btn-primary btnStart">開始遊戲</button>
+                <button type="button" class="btn btn-outline-primary btnGiveup" disabled="true" data-bs-toggle="modal" data-bs-target="#answerModal">重新開始</button>
+                <button type="button" class="btn btn-outline-primary btnAnswer" disabled="true" data-bs-toggle="modal" data-bs-target="#answerModal">看答案</button>
+                <button type="button" class="btn btn-outline-primary btnClear" disabled="true">清空紀錄</button>
+            </div>
+        </div>
+        <p class="errorMsg"></p>
+    </div>
+
+    <!-- step -->
+    <template id="step">
+        <div class="step d-flex bg-white w-100">
+            <p id="index" class="m-2 ms-3"></p>
+            <p class="badge bg-danger m-2"></p>
+            <p id="guess" class="m-2"></p>
+        </div>
+    </template>
+
+    <!-- answerBox -->
+    <template id="answerBoxTem">
+        <div id="answerModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <script>
+        let answer;
+    </script>
+    <script type="module">
+        import { $ge, $ce, $getRandom } from "../modules/helpers.js";
+
+        window.onload = function(){
+            setBtn();
+            guessNumber();
+            // console.log(!isNaN("我"));
+        }
+
+        function setBtn(){
+            //開始
+            $ge(".btnStart").addEventListener("click", () => {
+                $ge(".btnStart").disabled = true;
+                $ge(".btnGiveup").disabled = false;
+                $ge(".btnAnswer").disabled = false;
+                $ge(".btnGuess").disabled = false;
+                $ge(".btnClear").disabled = false;
+                $ge("input").disabled = false;
+
+                answer = getNumber();
+                setAnswerBox();
+            })
+            //放棄
+            $ge(".btnGiveup").addEventListener("click", () => {
+                $ge("#stepGroup").innerHTML = "";
+                $ge(".btnStart").disabled = false;
+                $ge(".btnGiveup").disabled = true;
+                $ge(".btnAnswer").disabled = true;
+                $ge(".btnGuess").disabled = true;
+                $ge(".btnClear").disabled = true;
+                $ge("input").disabled = true;
+            })
+            //清空紀錄
+            $ge(".btnClear").addEventListener("click", () => {
+                $ge("#stepGroup").innerHTML = "";
+            })
+            
+        }
+
+        function getNumber(){
+            let result = "";
+            let num;
+            while (result.length != 4){
+                num = $getRandom(0, 9);
+                if (!result.includes(num)){
+                    result += num;
+                }
+            }
+            return result;
+        }
+
+        function setAnswerBox(){
+            let answerBox = answerBoxTem.content.cloneNode(true);
+            answerBox.querySelector("p").innerText = `答案: ${answer}`;
+            document.body.append(answerBox);
+        }
+
+        function guessNumber(){
+            let index = 0;
+            
+            $ge(".btnGuess").addEventListener("click", () => {
+                let stepRow = step.content.cloneNode(true);
+                let A = 0;
+                let B = 0;
+                index++;
+                let num = document.querySelector("input").value;
+                // console.log(num);
+                
+                if(!isNaN(num) && num.length == 4){
+                    $ge(".errorMsg").innerText = "";
+                    for (let i = 0; i < 4; i++){
+                        for(let j = 0; j < 4; j++){
+                            if (num[i] == answer[j] && i == j){
+                                A++;
+                            }
+                            else if (num[i] == answer[j]){
+                                B++;
+                            }
+                        }
+                    }
+                    if(A == 4){
+                        gameWin(stepRow, A, B, num, index);
+                    }
+                    else{
+                        
+                        stepRow.querySelector("#index").innerText = index;
+                        stepRow.querySelector(".badge").innerText = `${A}A${B}B`;
+                        stepRow.querySelector("#guess").innerText = num;
+
+                        $ge("#stepGroup").append(stepRow);
+                    }
+
+                
+                }
+                else{
+                    $ge(".errorMsg").innerText = "請輸入4個數字!";
+                }
+            })
+        }
+
+        function gameWin(stepRow, A, B, num, index){
+            // let stepRow = step.content.cloneNode(true);
+            stepRow.querySelector("#index").innerText = index;
+            stepRow.querySelector(".badge").classList.replace("bg-danger", "bg-success");
+            stepRow.querySelector(".badge").innerText = `${A}A${B}B`;
+            stepRow.querySelector("#guess").innerText = num;
+
+            $ge(".btnGuess").disabled = true;
+            $ge("input").disabled = true;
+            
+            $ge("#stepGroup").append(stepRow);
+            $ge("#stepGroup").append($ce("p").innerText = "猜對了!");
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

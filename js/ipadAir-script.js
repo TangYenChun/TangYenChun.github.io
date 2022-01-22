@@ -1,5 +1,5 @@
-let ipadImg, navPrice, totalPrice, ipadAirData, storageValue, colorIndex, networkValue, price;
 
+import { $ge } from '../modules/helpers.js';
 const url = "https://raw.githubusercontent.com/TangYenChun/FileStorage/main/ipadAirArray.json";
 let xhr = new XMLHttpRequest();
 
@@ -10,24 +10,20 @@ window.onload = function(){
 
 function SetElement(){
     //color btn
-    ipadImg = document.querySelector(".aside_img>img");
-    document.querySelector("#outward__btn_gray").addEventListener("click", () => { setColorBtn(0) });
-    document.querySelector("#outward__btn_silver").addEventListener("click", () => { setColorBtn(1) });
-    document.querySelector("#outward__btn_green").addEventListener("click", () => { setColorBtn(2) });
-    document.querySelector("#outward__btn_gold").addEventListener("click", () => { setColorBtn(3) });
-    document.querySelector("#outward__btn_blue").addEventListener("click", () => { setColorBtn(4) });
+    ipadImg = $ge(".aside_img>img");
+    $ge("#outward__btn_gray").addEventListener("click", () => { setColorBtn(0) });
+    $ge("#outward__btn_silver").addEventListener("click", () => { setColorBtn(1) });
+    $ge("#outward__btn_green").addEventListener("click", () => { setColorBtn(2) });
+    $ge("#outward__btn_gold").addEventListener("click", () => { setColorBtn(3) });
+    $ge("#outward__btn_blue").addEventListener("click", () => { setColorBtn(4) });
 
     //storage btn
-    document.querySelector(".btn64gb").addEventListener("click", () => { setStorageBtn(true) });
-    document.querySelector(".btn256gb").addEventListener("click", () =>{ setStorageBtn(false) });
+    $ge(".btn64gb").addEventListener("click", () => { setStorageBtn(true) });
+    $ge(".btn256gb").addEventListener("click", () =>{ setStorageBtn(false) });
 
     //network btn
-    document.querySelector(".btnWifi").addEventListener("click", () => { setNetworkBtn(true) });
-    document.querySelector(".btnWifiInter").addEventListener("click", () => { setNetworkBtn(false) });
-
-    //price
-    navPrice = document.querySelector(".navPrice");
-    totalPrice = document.querySelector(".totalPrice");
+    $ge(".btnWifi").addEventListener("click", () => { setNetworkBtn(true) });
+    $ge(".btnWifiInter").addEventListener("click", () => { setNetworkBtn(false) });
 }
 
 function requestJSON(){
@@ -43,10 +39,10 @@ function setColorBtn(i){
     colorIndex = 1;
 
     //change storage btn state
-    document.querySelector(".capacity").classList.remove("disabled");
-    document.querySelector(".storageRemind").disabled = false;
-    document.querySelector(".btn64gb").disabled = false;
-    document.querySelector(".btn256gb").disabled = false;
+    $ge(".capacity").classList.remove("disabled");
+    $ge(".storageRemind").disabled = false;
+    $ge(".btn64gb").disabled = false;
+    $ge(".btn256gb").disabled = false;
 
     //add btn hover
     addBtnHover("capacity");
@@ -58,7 +54,7 @@ function addBtnHover(sectionName){
 
     style.appendChild(document.createTextNode(css));
 
-    document.querySelector("head").appendChild(style);
+    $ge("head").appendChild(style);
 }
 
 function setStorageBtn(storageType){
@@ -66,22 +62,22 @@ function setStorageBtn(storageType){
 
     let newPrice = ipadAirData.find(p => p["storage"] == storageValue)["price"];
 
-    navPrice.innerText = `NT$${priceHandler(newPrice)} 起`;
-    totalPrice.innerText = `NT$${priceHandler(newPrice)} 起`;
+    $ge(".navPrice").innerText = `NT$${priceHandler(newPrice)} 起`;
+    $ge(".totalPrice").innerText = `NT$${priceHandler(newPrice)} 起`;
 
     //netBtnPrice
     let netBtnPrice;
     netBtnPrice = ipadAirData.find(p => p["storage"] == storageValue && p["network"] == "Wi-Fi")["price"];
-    document.querySelector(".WifiBtnPrice").innerText = `NT$${priceHandler(netBtnPrice)}`;
+    $ge(".WifiBtnPrice").innerText = `NT$${priceHandler(netBtnPrice)}`;
     
     netBtnPrice = ipadAirData.find(p => p["storage"] == storageValue && p["network"] == "Cellular")["price"];
-    document.querySelector(".CelBtnPrice").innerText = `NT$${priceHandler(netBtnPrice)}`;
+    $ge(".CelBtnPrice").innerText = `NT$${priceHandler(netBtnPrice)}`;
 
     //change network btn state
-    document.querySelector(".network").classList.remove("disabled");
-    document.querySelector(".networkRemind").disabled = false;
-    document.querySelector(".btnWifi").disabled = false;
-    document.querySelector(".btnWifiInter").disabled = false;
+    $ge(".network").classList.remove("disabled");
+    $ge(".networkRemind").disabled = false;
+    $ge(".btnWifi").disabled = false;
+    $ge(".btnWifiInter").disabled = false;
 
     //add btn hover
     addBtnHover("network");
@@ -93,13 +89,13 @@ function setNetworkBtn(networkType){
     
     newPrice = ipadAirData.find(p => p["storage"] == storageValue && p["network"] == networkValue)["price"];
 
-    navPrice.innerText = `NT$${priceHandler(newPrice)}`;
-    totalPrice.innerText = `NT$${priceHandler(newPrice)}`;
+    $ge(".navPrice").innerText = `NT$${priceHandler(newPrice)}`;
+    $ge(".totalPrice").innerText = `NT$${priceHandler(newPrice)}`;
     
     //change price section state
     if (colorIndex != undefined && storageValue != undefined && networkValue != undefined){
-        document.querySelector(".btnContinue").disabled = false;
-        document.querySelector(".price").classList.remove("disabled");
+        $ge(".btnContinue").disabled = false;
+        $ge(".price").classList.remove("disabled");
     }
 }
 
