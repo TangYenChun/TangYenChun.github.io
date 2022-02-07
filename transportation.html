@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <!-- map -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+        <title>YouBike站點查詢</title>
+        <style>
+            .container{
+                max-width: 1200px;
+            }
+            .header{
+                /* background-color: #9BC9CB; */
+                background-image: linear-gradient(to left top, #E6FB8C,#FFC300);
+                width: 100%;
+                height: 150px;
+                display: flex;
+                justify-content: center;
+                /* align-items: center; */
+            }
+            .header h1{
+                color: #555;
+                font-size: 30px;
+                margin-bottom: 40px;
+                margin-top: auto;
+            }
+            .txt{
+                width: 80%;
+            }
+            .map, .map-icon{
+                height: 500px;
+                border: 1px solid #aaa;
+            }
+            .icon-group{
+                height: 100%;
+            }
+            .icon>img{
+                width: 40%;
+            }
+            .icon>p{
+                margin-bottom: 0;;
+            }
+            .icon{
+                position: relative;
+            }
+            .icon:not(:last-child) ::after{
+                content: '';
+                position: absolute;
+                bottom: -19px;
+                left: 0;
+                border: 1px solid #aaa;
+                width: 100%;
+            }
+            
+            .search-result{
+                position: absolute;
+                z-index: 2;
+                top: 38px; 
+                right: 0;
+                padding: 0;
+            }
+            .search-result>ul{
+                list-style: none;
+                padding: 0;
+            }
+            .search-result>ul>li{
+                border: 1px solid #aaa;
+                background-color: #fff;
+            }
+            .search-result>ul>p{
+                border: 1px solid #aaa;
+                background-color: #fff;
+            }
+            .search-result>ul>li:hover{
+                border: 1px solid #aaa;
+                background-color: #ffc107;
+                cursor: pointer;
+                transition: .3s;
+            }
+            .map-area{
+                position: relative;
+                z-index: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="header mb-5">
+            <h1>YouBike站點查詢</h1>
+        </header>
+        <div class="container mb-4">
+            <!-- btn group -->
+            <!-- <div class="row d-flex justify-content-center mb-5">
+                <button class="btn btn-outline-warning col-9 col-md-2 me-2 active">YouBike</button>
+                <button class="btn btn-outline-primary col-9 col-md-2">公車</button>
+            </div> -->
+            <!-- 各縣市下拉選單 -->
+
+            <div class="content row">
+                <div class="col-9 m-auto">
+                    <!-- search -->
+                    <div class="row mb-2 position-relative">
+                        <label for="" class="px-0 ms-auto btn-group w-25">
+                            <input type="text">
+                            <button class="btn btn-warning searchBtn"><i class="fas fa-search"></i></button>
+                        </label>
+                        <div class="search-result ms-auto w-25">
+                            <ul>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- map -->
+                    <div class="map-area row">
+                        <div class="col-2 map-icon">
+                            <div class="icon-group d-flex flex-column justify-content-evenly">
+                                <div class="icon text-center my-auto">
+                                    <img class="mb-1" src="img/img_youBike/normal.svg" alt="正常租借icon">
+                                    <p>正常租借</p>
+                                </div>
+                                <div class="icon text-center my-auto">
+                                    <img class="mb-1" src="img/img_youBike/noBike.svg" alt="正常租借icon">
+                                    <p>無車可借</p>
+                                </div>
+                                <div class="icon text-center my-auto">
+                                    <img class="mb-1" src="img/img_youBike/fullBike.svg" alt="正常租借icon">
+                                    <p>車位滿載</p>
+                                </div>
+                                <div class="icon text-center my-auto">
+                                    <img class="mb-1" src="img/img_youBike/disabled.svg" alt="正常租借icon">
+                                    <p>暫停營運</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="map" class="col-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+        <!-- axios -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            let map
+            let youbikeDataRequest = axios.get('https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json')
+
+            let youbikeData
+            let markers = L.markerClusterGroup()
+
+            //DOM
+            let youbikeMap = document.querySelector('#map')
+            let input = document.querySelector('input')
+            let searchBtn = document.querySelector('.searchBtn')
+            // let searchResult = document.querySelector('.search-result')
+            let searchUl = document.querySelector('ul')
+
+            window.onload = function(){
+                setBikeMap()
+
+                Promise.all([youbikeDataRequest])
+                    .then(response => {
+                        let [bikeRes] = response
+
+                        youbikeData = bikeRes.data
+                        setMarker()
+                        input.addEventListener('input', searchStation)
+                    })
+            }
+
+            function setBikeMap(){
+                map = L.map('map', {
+                    center: [25.048044943772883, 121.51694382683594],
+                    zoom: 12
+                })
+                let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                let osm = new L.TileLayer(osmUrl, { minZoom: 12, maxZoom: 19 })
+                map.addLayer(osm)
+            }
+
+            function setMarker(){
+                if (markers) markers.clearLayers()
+                //站點名稱,可借車
+                let stationName, surplus, icon
+
+                var normalIcon = L.icon({
+                    iconUrl: 'img/img_youBike/normal.svg',
+                    shadowUrl: 'img/img_youBike/iconShadow.svg',
+
+                    iconSize: [38, 60],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [15, 85],
+                    popupAnchor: [-3, -76]
+                })
+
+                var noBikeIcon = L.icon({
+                    iconUrl: 'img/img_youBike/noBike.svg',
+                    shadowUrl: 'img/img_youBike/iconShadow.svg',
+
+                    iconSize: [38, 60],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [15, 85],
+                    popupAnchor: [-3, -76]
+                })
+
+                var fullBikeIcon = L.icon({
+                    iconUrl: 'img/img_youBike/fullBike.svg',
+                    shadowUrl: 'img/img_youBike/iconShadow.svg',
+
+                    iconSize: [38, 60],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [15, 85],
+                    popupAnchor: [-3, -76]
+                })
+
+                var disabledIcon = L.icon({
+                    iconUrl: 'img/img_youBike/disabled.svg',
+                    shadowUrl: 'img/img_youBike/iconShadow.svg',
+
+                    iconSize: [38, 60],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [15, 85],
+                    popupAnchor: [-3, -76]
+                })
+
+                Object.keys(youbikeData).forEach(x => {
+                    
+                    let data = youbikeData[x]
+
+                    if (data.act == 0){
+                        icon = disabledIcon
+                    }
+                    else{
+                        if (data.sbi == 0)  icon = noBikeIcon
+                        else if (data.bemp == 0) icon = fullBikeIcon
+                        else icon = normalIcon
+                    }
+
+                    let marker = L.marker([data.lat, data.lng], {icon: icon})
+                    
+                    if ((data.sna).includes('_')){
+                        stationName = (data.sna).split('_')[1]
+                        surplus = `<br>Youbike2.0 : ${data.sbi}`
+                    }
+                    else{
+                        stationName = data.sna
+                        surplus = sbi
+                    }
+
+                    //訊息框
+                    marker.bindPopup(
+                        `
+                        <h4>${stationName}</h4>
+                        <p>站點位置: ${data.ar}</p>
+                        <p>可借車輛: ${surplus}</p>
+                        <p>可停空位: ${data.bemp}</p>
+                        <p>更新時間: ${data.updateTime}</p>
+                        `
+                    )
+                    // marker.alt('img/img_youBike/normal.svg')
+                    markers.addLayer(marker)
+                })
+                map.addLayer(markers)
+            }
+
+            function searchStation(){
+                searchUl.innerHTML = ''
+                let inputTxt = input.value
+                if (inputTxt != ''){
+                    // let staNameGroup = document.createElement('div')
+                    youbikeData.forEach(sta => {
+                        if((sta.sna).includes(inputTxt) || (sta.ar).includes(inputTxt)){
+                            let staName = document.createElement('li')
+                            staName.innerText = (sta.sna).split('_')[1]
+                            staName.onclick = function(){
+                                //搜尋站點
+                                let targetName = this.innerText
+                                let target = youbikeData.find(x => (x.sna).split('_')[1] == targetName)
+                                map.flyTo([target.lat, target.lng], 19, { animation: true, duration: 1.5 })
+                                // .openPopup()
+
+                            }
+
+                            searchUl.appendChild(staName)
+                        }
+                    })
+                    if (searchUl.innerHTML == ''){
+                        let staName = document.createElement('p')
+                        staName.innerText = '查無資料!'
+                        searchUl.appendChild(staName)
+                    }
+                }
+                
+            }
+
+        </script>
+    </body>
+</html>
