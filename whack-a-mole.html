@@ -258,16 +258,12 @@
             let level = parseInt(btn.getAttributeNode('btn-id').value)
             console.log(level)
 
-            time = level * 40
+            // time = level * 40
+            time = 60
             if (time > 0) {
                 console.log('startgame')
                 timeInterval = setInterval(countDown, 1000)
-                if (time == 0) {
-                    init()
-                    modalTitle.innerText = '時間到!'
-                    modalBody.innerText = `得分: ${score}<br>請重新開始遊戲`
-                    bootstrap.Modal.getOrCreateInstance(modal).show()
-                }
+                
             }
 
             levelBtns.forEach(btn => {
@@ -286,6 +282,12 @@
         function countDown() {
             time--
             timeTxt.innerText = `${time} 秒`
+            if (time == 0) {
+                modalTitle.innerText = '時間到!'
+                modalBody.innerHTML = `得分: ${score}<br>請重新開始遊戲`
+                bootstrap.Modal.getOrCreateInstance(modal).show()
+                init()
+            }
         }
 
         function addOne(level) {
@@ -299,19 +301,18 @@
             }
         }
 
-
         function removeOne(random) {
             targets[random].classList.remove('active')
             life--
             lifeTxt.innerText = life
+            console.log(life)
 
             //生命耗盡
             if (life <= 0) {
-                gameOver = true
-                init()
                 modalTitle.innerText = '遊戲結束!'
-                modalBody.innerText = '你輸給了地鼠! 請重新開始遊戲'
+                modalBody.innerHTML = `得分: ${score}<br>你輸給了地鼠! 請重新開始遊戲`
                 bootstrap.Modal.getOrCreateInstance(modal).show()
+                init()
             }
         }
 
@@ -322,7 +323,6 @@
             }
             secondNumber = firstNumber
             return firstNumber
-
         }
     </script>
 
